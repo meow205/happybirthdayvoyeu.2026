@@ -1,0 +1,241 @@
+/* ==========================================================================
+   CHÚC MỪNG SINH NHẬT CHUCHU - LUXURY ROMANTIC THEME
+   Tailored for Chuchu with Magical Particle Physics & Dreamy Animations
+   ========================================================================== */
+
+:root {
+    --candle-glow: 1;
+    --breath-intensity: 0;
+    --primary-pink: #ec4899;
+    --primary-gold: #fbbf24;
+    --primary-sky: #38bdf8;
+    --bg-deep: #06030d;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+input, textarea {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-deep);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #fff;
+}
+
+/* Typography Classes */
+.font-script {
+    font-family: 'Dancing Script', cursive;
+}
+
+.font-serif-luxury {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Cinematic Animated Night Sky with Dynamic Nebula Waves & Warmth */
+.night-sky {
+    background:
+        radial-gradient(circle at 38% 46%, rgba(255, 180, 80, calc(0.38 * var(--candle-glow))), transparent 48%),
+        radial-gradient(circle at 74% 44%, rgba(244, 114, 182, 0.18), transparent 52%),
+        radial-gradient(circle at 50% 12%, rgba(56, 189, 248, 0.12), transparent 45%),
+        radial-gradient(ellipse at top, #23113d 0%, #0d061c 60%, #040108 100%);
+    background-size: 100% 100%;
+    animation: celestialSkyShift 14s ease-in-out infinite alternate;
+    transition: background 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes celestialSkyShift {
+    0% {
+        filter: hue-rotate(0deg) brightness(1);
+    }
+    50% {
+        filter: hue-rotate(6deg) brightness(1.05);
+    }
+    100% {
+        filter: hue-rotate(-6deg) brightness(0.98);
+    }
+}
+
+/* Luxury Glassmorphism Panels */
+.glass-panel {
+    background: rgba(18, 11, 34, 0.76);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.glass-pill {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-pill:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.42);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(236, 72, 153, 0.3);
+}
+
+.glass-pill:active {
+    transform: translateY(1px) scale(0.96);
+}
+
+/* Radiant Animated Gradient Buttons */
+.blow-btn-glow {
+    background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #38bdf8 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 3.5s ease infinite;
+    box-shadow: 0 0 32px rgba(236, 72, 153, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blow-btn-glow:hover {
+    box-shadow: 0 0 45px rgba(236, 72, 153, 0.85), 0 0 70px rgba(168, 85, 247, 0.6);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.blow-btn-glow.active-blowing {
+    transform: scale(0.96);
+    box-shadow: 0 0 60px rgba(56, 189, 248, 1), 0 0 100px rgba(236, 72, 153, 0.95);
+    filter: brightness(1.15);
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Shimmering Gold & Rose Typography */
+.text-shimmer {
+    background: linear-gradient(to right, #fde68a, #f9a8d4, #ffffff, #38bdf8, #fde68a);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+/* Portrait Wrapper & Cutout Glow (Angled to blow from above downwards onto candles) */
+#portraitWrapper {
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+    transform-origin: 75% 85%;
+    will-change: transform;
+    transform: translateY(-85px) rotate(-14deg);
+}
+
+.portrait-cutout-glow {
+    filter: drop-shadow(-10px 12px 24px rgba(0, 0, 0, 0.65))
+            drop-shadow(-4px -2px 20px rgba(255, 180, 120, calc(0.42 * var(--candle-glow))))
+            drop-shadow(4px 4px 22px rgba(236, 72, 153, 0.22));
+}
+
+/* Soft Idle Breathing Float Animation for Chuchu */
+@keyframes chuchuIdleBreathe {
+    0%, 100% {
+        transform: translateY(-85px) rotate(-14deg);
+    }
+    50% {
+        transform: translateY(-93px) rotate(-12.8deg);
+    }
+}
+
+.chuchu-idle-float {
+    animation: chuchuIdleBreathe 4.5s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+    #portraitWrapper {
+        transform: translateY(-55px) rotate(-12deg);
+    }
+    @keyframes chuchuIdleBreathe {
+        0%, 100% {
+            transform: translateY(-55px) rotate(-12deg);
+        }
+        50% {
+            transform: translateY(-62px) rotate(-11deg);
+        }
+    }
+}
+
+
+
+/* 3D Wax Seal Pulse on Envelope */
+@keyframes sealPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 25px rgba(251, 191, 36, 0.7), 0 0 50px rgba(236, 72, 153, 0.4);
+    }
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 45px rgba(244, 114, 182, 0.95), 0 0 75px rgba(251, 191, 36, 0.6);
+    }
+}
+
+.wax-seal-pulse {
+    animation: sealPulse 2.4s ease-in-out infinite;
+}
+
+/* Stage Transition States */
+.stage-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: scale(0.93) translateY(24px) !important;
+    display: none !important;
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stage-visible {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: scale(1) translateY(0) !important;
+    display: flex !important;
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Floating Crown Badge over Cake */
+@keyframes floatTopper {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    50% { transform: translateY(-7px) rotate(1deg); }
+}
+
+.floating-cake-topper {
+    animation: floatTopper 3.2s ease-in-out infinite;
+}
+
+/* Subtle Shimmer on Wish Suggestions */
+.wish-chip {
+    transition: all 0.25s ease;
+}
+.wish-chip:hover {
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.04); }
+::-webkit-scrollbar-thumb { background: rgba(244, 114, 182, 0.4); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(244, 114, 182, 0.65); }

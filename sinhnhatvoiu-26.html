@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chúc Mừng Sinh Nhật Snow iu ✨ Lời Chúc - Thổi Nến - Gửi Điều Ước</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="night-sky relative w-full h-full overflow-hidden select-none">
+
+    <!-- =========================================================================
+         0. BACKGROUND CANVAS: DYNAMIC NEBULAE, STARS, LANTERNS & FLOATING HEARTS
+    ========================================================================== -->
+    <canvas id="bgCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- =========================================================================
+         1. TOP HEADER NAVIGATION: BRAND, 3-STEP JOURNEY & AUDIO CONTROLS
+    ========================================================================== -->
+    <header class="fixed top-0 left-0 right-0 z-40 w-full px-4 sm:px-8 pt-4 sm:pt-5 pointer-events-none flex items-center justify-between">
+        <!-- Left: Brand / Love Badge (Anchored Left) -->
+        <div class="glass-pill px-3.5 py-2 rounded-full flex items-center gap-2 pointer-events-auto shadow-lg">
+            <span class="w-2.5 h-2.5 rounded-full bg-pink-400 animate-ping"></span>
+            <span class="text-xs sm:text-sm font-medium text-pink-100 hidden sm:inline">
+                Happy Birthday Snow <strong class="text-amber-200 font-semibold">✨</strong>
+            </span>
+            <span class="text-xs font-medium text-pink-100 sm:hidden">
+                Snow ✨
+            </span>
+        </div>
+
+        <!-- Center: 3-Step Journey Stepper (CANH GIỮA 100% TUYỆT ĐỐI CHÍNH XÁC VỚI fixed left-1/2 -translate-x-1/2) -->
+        <div class="fixed top-4 sm:top-5 left-1/2 -translate-x-1/2 glass-panel px-3.5 sm:px-6 py-1.5 sm:py-2 rounded-full flex items-center gap-2 sm:gap-4 pointer-events-auto border border-white/15 shadow-xl">
+            <button id="stepBtn1" class="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-amber-300 transition-all">
+                <span id="stepDot1" class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center text-[11px] font-bold shadow-[0_0_12px_rgba(251,191,36,0.8)]">1</span>
+                <span>Lời Chúc</span>
+            </button>
+            <div class="w-4 sm:w-8 h-[1px] bg-white/20"></div>
+            <button id="stepBtn2" class="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-white/45 transition-all">
+                <span id="stepDot2" class="w-5 h-5 rounded-full bg-white/15 text-white/70 flex items-center justify-center text-[11px] font-bold">2</span>
+                <span>Thổi Nến</span>
+            </button>
+            <div class="w-4 sm:w-8 h-[1px] bg-white/20"></div>
+            <button id="stepBtn3" class="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-white/45 transition-all">
+                <span id="stepDot3" class="w-5 h-5 rounded-full bg-white/15 text-white/70 flex items-center justify-center text-[11px] font-bold">3</span>
+                <span>Điều Ước</span>
+            </button>
+        </div>
+
+        <!-- Right: Audio Control Button (Anchored Right) -->
+        <div class="flex items-center gap-2 pointer-events-auto">
+            <button id="btnAudioToggle" title="Bật/Tắt âm thanh & nhạc nền" class="glass-pill p-2.5 rounded-full text-pink-200 hover:text-white">
+                <i data-lucide="volume-2" id="audioIcon" class="w-4 h-4 text-emerald-300"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Optional Custom MP3 Background Music (Chỉ cần thả file music.mp3 vào cùng thư mục) -->
+    <audio id="customBgm" src="music.mp3" preload="auto" loop></audio>
+
+    <!-- =========================================================================
+         STAGE 1: GỬI LỜI CHÚC MỪNG SINH NHẬT (3D Royal Envelope -> Typewriter Card)
+    ========================================================================== -->
+    <section id="stage1Greeting" class="fixed inset-0 z-30 flex items-center justify-center p-4 transition-all duration-700 stage-visible">
+
+        <!-- Step 1A: Closed Magical Wax-Sealed Envelope -->
+        <div id="envelopeIntroBox" class="flex flex-col items-center text-center max-w-md w-full cursor-pointer group">
+            <div class="mb-4 px-4 py-1.5 rounded-full bg-pink-500/15 border border-pink-300/30 text-pink-200 text-xs uppercase tracking-[0.2em] font-semibold animate-pulse">
+                ✨ Bức Thư Tình Sinh Nhật Dành Riêng Cho Em ✨
+            </div>
+
+            <!-- 3D Luxury Envelope Graphic -->
+            <div class="relative w-72 h-48 sm:w-88 sm:h-56 rounded-3xl bg-gradient-to-br from-rose-950/90 via-purple-950/90 to-slate-950/95 border-2 border-amber-300/40 shadow-[0_25px_70px_rgba(236,72,153,0.45)] flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-1">
+                <!-- Envelope Top Flap Lines -->
+                <svg viewBox="0 0 320 200" class="absolute inset-0 w-full h-full pointer-events-none opacity-65">
+                    <path d="M0,0 L160,115 L320,0" fill="rgba(244,114,182,0.12)" stroke="rgba(253,230,138,0.45)" stroke-width="2" />
+                    <path d="M0,200 L115,95 M320,200 L205,95" stroke="rgba(253,230,138,0.22)" stroke-width="1.5" />
+                </svg>
+
+                <!-- Glowing Gold Wax Seal Button -->
+                <div class="wax-seal-pulse relative z-10 w-20 h-20 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-rose-600 p-1 shadow-2xl flex items-center justify-center border-2 border-amber-100">
+                    <div class="w-full h-full rounded-full border border-amber-900/40 flex flex-col items-center justify-center text-slate-950">
+                        <i data-lucide="heart-handshake" class="w-7 h-7 text-rose-950 fill-amber-200"></i>
+                        <span class="text-[9px] font-extrabold uppercase tracking-wider mt-0.5 text-rose-950">Mở Thư</span>
+                    </div>
+                </div>
+
+                <!-- Ambient Sparkle Orbs -->
+                <div class="absolute -top-10 -left-10 w-28 h-28 bg-pink-500/30 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -right-10 w-28 h-28 bg-amber-400/30 rounded-full blur-2xl"></div>
+            </div>
+
+            <h2 class="font-script text-4xl sm:text-5xl text-shimmer mt-6 drop-shadow">
+                Chạm Để Mở Lời Chúc
+            </h2>
+            <p class="text-xs sm:text-sm text-purple-200/75 mt-2">
+                Hãy bật âm thanh và mở phong bì để bắt đầu đêm tiệc sinh nhật lung linh 🎶
+            </p>
+        </div>
+
+        <!-- Step 1B: Opened Greeting Card with Typewriter Animation -->
+        <div id="greetingCardModal" class="glass-panel hidden relative w-full max-w-lg rounded-3xl p-6 sm:p-9 border border-pink-300/35 shadow-[0_0_90px_rgba(236,72,153,0.45)] transform scale-95 opacity-0 transition-all duration-500 overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-pink-500/30 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-500/25 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Card Header -->
+            <div class="flex flex-col items-center text-center mb-5">
+                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-pink-500/30 to-amber-300/30 border border-amber-300/50 flex items-center justify-center mb-2.5 shadow-lg">
+                    <i data-lucide="sparkles" class="w-7 h-7 text-amber-300"></i>
+                </div>
+                <h1 class="font-script text-4xl sm:text-5xl text-shimmer mt-1">
+                    Chúc Mừng Sinh Nhật Snow iu ✨
+                </h1>
+            </div>
+
+            <!-- Typewriter Letter Body -->
+            <div class="bg-white/5 border border-white/15 rounded-2xl p-5 sm:p-6 max-h-[38vh] overflow-y-auto shadow-inner">
+                <p id="greetingTypewriter" class="font-serif-luxury text-base sm:text-lg leading-relaxed text-pink-50/95 whitespace-pre-line italic"></p>
+            </div>
+
+            <!-- Proceed to Step 2 Button -->
+            <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <span class="text-xs text-amber-200/80 flex items-center gap-1.5">
+                    <i data-lucide="flame" class="w-4 h-4 text-amber-400 animate-bounce"></i>
+                    Bánh kem lung linh đã thắp nến chờ em!
+                </span>
+
+                <button id="btnGoToBlowStage" class="blow-btn-glow w-full sm:w-auto px-6 py-3.5 rounded-full text-sm sm:text-base font-bold text-white flex items-center justify-center gap-2 shadow-xl">
+                    <span>Đến Thổi Nến Cùng Vợ Iu 🎂</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         STAGE 2: SÂN KHẤU THỔI NẾN VỚI BÁNH KEM NGHỆ THUẬT & CHUCHU THỔI NẾN
+    ========================================================================== -->
+    <main id="stage2BlowCandles" class="fixed inset-0 z-20 flex flex-col justify-between pt-16 pb-24 transition-all duration-700 stage-hidden">
+
+        <!-- Stage 2 Header Subtitle -->
+        <div class="relative z-30 text-center px-4 pointer-events-none mt-1">
+            <h2 id="stage2BannerTitle" class="font-script text-3xl sm:text-4xl md:text-5xl text-shimmer drop-shadow">
+                Hãy Nhắm Mắt & Cùng Snow iu Thổi Nến Nhé!
+            </h2>
+            <p id="statusSubtitle" class="text-xs sm:text-sm text-purple-200/90 mt-1 max-w-xl mx-auto min-h-[22px] transition-all">
+                Nhấn giữ nút <strong class="text-pink-300">"Giữ Để Thổi Nến 💨"</strong>, phím <kbd class="px-1.5 py-0.5 bg-white/10 rounded text-amber-200 font-mono text-[11px]">Space</kbd> hoặc bật Mic để Vợ iu thổi tắt nến ✨
+            </p>
+        </div>
+
+        <!-- Warm Candlelight Halo Behind Cake -->
+        <div id="cakeLightHalo" class="absolute pointer-events-none rounded-full blur-3xl transition-opacity duration-700"
+             style="width: 520px; height: 520px; left: 34%; top: 48%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(255,185,85,0.48) 0%, rgba(244,114,182,0.2) 55%, transparent 75%);">
+        </div>
+
+        <!-- UNIFIED CENTER STAGE: LUXURY ARTISAN CAKE ON LEFT + PROPORTIONED CHUCHU ON RIGHT -->
+        <div id="stage2StageArea" class="relative w-full max-w-5xl mx-auto flex-1 flex items-center justify-center gap-4 sm:gap-8 md:gap-12 px-4">
+
+            <!-- LUXURY 3D GOURMET BIRTHDAY CAKE -->
+            <div id="cakeWrapper" class="relative z-10 flex flex-col items-center justify-center">
+
+                <!-- Floating Neon Ribbon Cake Topper -->
+                <div class="floating-cake-topper mb-3 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-300/25 via-pink-400/35 to-amber-300/25 border border-amber-200/40 backdrop-blur-md shadow-[0_0_25px_rgba(251,191,36,0.45)]">
+                    <span class="font-script text-2xl sm:text-3xl text-amber-200 drop-shadow-[0_2px_8px_rgba(251,191,36,0.9)]">Happy Birthday Snow ♥</span>
+                </div>
+
+                <!-- Brand New Luxury Artisan Cake SVG (Tall, Realistic, Gourmet Details) -->
+                <div id="cakeSvgContainer" class="relative w-[280px] sm:w-[350px] md:w-[410px] lg:w-[450px] select-none pointer-events-none">
+                    <svg viewBox="0 0 500 420" class="w-full h-auto drop-shadow-[0_25px_45px_rgba(0,0,0,0.85)]">
+                        <defs>
+                            <!-- Metallic Gold Pedestal Gradient -->
+                            <linearGradient id="goldPlateGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#78350f" />
+                                <stop offset="15%" stop-color="#b45309" />
+                                <stop offset="35%" stop-color="#fde68a" />
+                                <stop offset="50%" stop-color="#f59e0b" />
+                                <stop offset="70%" stop-color="#fef3c7" />
+                                <stop offset="85%" stop-color="#b45309" />
+                                <stop offset="100%" stop-color="#78350f" />
+                            </linearGradient>
+
+                            <!-- Bottom Tier Blush Rose Gradient -->
+                            <linearGradient id="bottomTierGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#be185d" />
+                                <stop offset="20%" stop-color="#ec4899" />
+                                <stop offset="50%" stop-color="#fbcfe8" />
+                                <stop offset="80%" stop-color="#f472b6" />
+                                <stop offset="100%" stop-color="#9d174d" />
+                            </linearGradient>
+
+                            <!-- Top Tier Cream Gradient -->
+                            <linearGradient id="topTierGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#f472b6" />
+                                <stop offset="25%" stop-color="#fdf2f8" />
+                                <stop offset="50%" stop-color="#ffffff" />
+                                <stop offset="75%" stop-color="#fce7f3" />
+                                <stop offset="100%" stop-color="#ec4899" />
+                            </linearGradient>
+
+                            <!-- Glossy Drip Ganache Gradient -->
+                            <linearGradient id="dripGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff" />
+                                <stop offset="45%" stop-color="#fff1f2" />
+                                <stop offset="85%" stop-color="#ffe4e6" />
+                                <stop offset="100%" stop-color="#fbcfe8" />
+                            </linearGradient>
+
+                            <!-- Ruby Strawberry Gradient -->
+                            <radialGradient id="strawberryGrad" cx="35%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#fda4af" />
+                                <stop offset="35%" stop-color="#e11d48" />
+                                <stop offset="80%" stop-color="#9f1239" />
+                                <stop offset="100%" stop-color="#4c0519" />
+                            </radialGradient>
+
+                            <!-- Blueberry Gradient -->
+                            <radialGradient id="blueberryGrad" cx="35%" cy="30%" r="65%">
+                                <stop offset="0%" stop-color="#818cf8" />
+                                <stop offset="45%" stop-color="#4338ca" />
+                                <stop offset="100%" stop-color="#1e1b4b" />
+                            </radialGradient>
+                        </defs>
+
+                        <!-- 1. ROYAL METALLIC GOLD PEDESTAL / STAND -->
+                        <!-- Stand Base Ellipse & Stem -->
+                        <ellipse cx="250" cy="398" rx="145" ry="16" fill="url(#goldPlateGrad)" opacity="0.9" />
+                        <ellipse cx="250" cy="394" rx="135" ry="14" fill="#92400e" />
+                        <path d="M210,335 L290,335 L315,394 C315,402 185,402 185,394 Z" fill="url(#goldPlateGrad)" />
+                        <!-- Stand Top Plate Rim -->
+                        <ellipse cx="250" cy="336" rx="225" ry="28" fill="#451a03" />
+                        <ellipse cx="250" cy="330" rx="225" ry="26" fill="url(#goldPlateGrad)" />
+                        <ellipse cx="250" cy="326" rx="205" ry="22" fill="#fff1f2" opacity="0.35" />
+
+                        <!-- 2. BOTTOM TIER (Blush Rose Velvet with Quilted Pattern) -->
+                        <path d="M75,200 L75,315 C75,338 425,338 425,315 L425,200 Z" fill="url(#bottomTierGrad)" />
+                        
+                        <!-- Quilted Gold Pearl Borders -->
+                        <g fill="url(#goldPlateGrad)">
+                            <circle cx="95" cy="318" r="6" /><circle cx="120" cy="323" r="6.5" /><circle cx="150" cy="327" r="7" />
+                            <circle cx="182" cy="330" r="7" /><circle cx="215" cy="332" r="7.5" /><circle cx="250" cy="333" r="7.5" />
+                            <circle cx="285" cy="332" r="7.5" /><circle cx="318" cy="330" r="7" /><circle cx="350" cy="327" r="7" />
+                            <circle cx="380" cy="323" r="6.5" /><circle cx="405" cy="318" r="6" />
+                        </g>
+
+                        <!-- Bottom Tier Golden Ribbon Trim -->
+                        <path d="M75,260 C180,282 320,282 425,260 L425,272 C320,294 180,294 75,272 Z" fill="url(#goldPlateGrad)" opacity="0.9" />
+
+                        <!-- Bottom Tier Top Surface Ellipse -->
+                        <ellipse cx="250" cy="200" rx="175" ry="25" fill="#fce7f3" />
+
+                        <!-- Decadent Drip Ganache Layer on Bottom Tier -->
+                        <path d="M75,200
+                                 C82,235 102,235 108,212
+                                 C115,248 138,252 145,215
+                                 C154,240 175,238 182,218
+                                 C192,260 218,260 228,220
+                                 C238,245 262,245 272,220
+                                 C282,262 308,262 318,218
+                                 C325,240 346,242 355,215
+                                 C362,248 385,245 392,212
+                                 C398,235 418,235 425,200 Z" fill="url(#dripGrad)" />
+                        <ellipse cx="250" cy="198" rx="175" ry="23" fill="url(#dripGrad)" />
+
+                        <!-- 3. TOP TIER (Ivory Velvet with Rose Gold Accents) -->
+                        <path d="M125,115 L125,200 C125,218 375,218 375,200 L375,115 Z" fill="url(#topTierGrad)" />
+                        
+                        <!-- Whipped Cream Shells along Top Tier Base -->
+                        <g fill="url(#dripGrad)">
+                            <ellipse cx="140" cy="202" rx="15" ry="9" />
+                            <ellipse cx="168" cy="206" rx="16" ry="10" />
+                            <ellipse cx="200" cy="209" rx="17" ry="10.5" />
+                            <ellipse cx="234" cy="211" rx="18" ry="11" />
+                            <ellipse cx="266" cy="211" rx="18" ry="11" />
+                            <ellipse cx="300" cy="209" rx="17" ry="10.5" />
+                            <ellipse cx="332" cy="206" rx="16" ry="10" />
+                            <ellipse cx="360" cy="202" rx="15" ry="9" />
+                        </g>
+
+                        <!-- Top Tier Drip Cream Frosting -->
+                        <path d="M125,115
+                                 C132,145 150,145 158,126
+                                 C168,160 190,160 200,128
+                                 C210,150 230,150 240,130
+                                 C250,165 272,165 282,128
+                                 C292,150 310,150 320,126
+                                 C330,158 350,155 358,125
+                                 C365,142 372,138 375,115 Z" fill="url(#dripGrad)" />
+
+                        <!-- TOP SURFACE OF TOP TIER (Where candles & fruits sit) -->
+                        <ellipse cx="250" cy="115" rx="125" ry="20" fill="url(#dripGrad)" stroke="#fce7f3" stroke-width="2.5" />
+
+                        <!-- 4. FRESH BERRIES & TOPPING DETAILS -->
+                        <!-- Strawberries -->
+                        <g>
+                            <circle cx="150" cy="112" r="11" fill="url(#strawberryGrad)" />
+                            <circle cx="188" cy="122" r="12" fill="url(#strawberryGrad)" />
+                            <circle cx="250" cy="126" r="13" fill="url(#strawberryGrad)" />
+                            <circle cx="312" cy="122" r="12" fill="url(#strawberryGrad)" />
+                            <circle cx="350" cy="112" r="11" fill="url(#strawberryGrad)" />
+                        </g>
+
+                        <!-- Blueberries & Pearls -->
+                        <g>
+                            <circle cx="170" cy="116" r="6" fill="url(#blueberryGrad)" />
+                            <circle cx="218" cy="125" r="6.5" fill="url(#blueberryGrad)" />
+                            <circle cx="282" cy="125" r="6.5" fill="url(#blueberryGrad)" />
+                            <circle cx="330" cy="116" r="6" fill="url(#blueberryGrad)" />
+                        </g>
+
+                        <!-- Golden Heart Jewel on Top Tier -->
+                        <path d="M250,162 C250,152 235,146 230,156 C225,166 250,178 250,183 C250,178 275,166 270,156 C265,146 250,152 250,162 Z"
+                              fill="url(#goldPlateGrad)" filter="drop-shadow(0 2px 6px rgba(251,191,36,0.8))" />
+
+                        <!-- Golden Candle Sockets Embedded on Cake Surface (Positions for 5 Candles) -->
+                        <g fill="url(#goldPlateGrad)">
+                            <ellipse cx="178" cy="118" rx="8" ry="3.5" />
+                            <ellipse cx="214" cy="116" rx="8" ry="3.5" />
+                            <ellipse cx="250" cy="115" rx="8.5" ry="3.5" />
+                            <ellipse cx="286" cy="116" rx="8" ry="3.5" />
+                            <ellipse cx="322" cy="118" rx="8" ry="3.5" />
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- CHUCHU'S PROFILE PORTRAIT (Shrunk to Harmonious Proportion & Vertically Aligned with Candles) -->
+            <div id="portraitWrapper" class="relative z-20 flex items-center justify-center chuchu-idle-float">
+                <div id="portraitInnerContainer" class="relative portrait-cutout-glow transition-all duration-500 w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] md:w-[260px] md:h-[260px] lg:w-[290px] lg:h-[290px]">
+
+                    <!-- Snow Cutout Image with Fallback Hierarchy -->
+                    <img id="directPortraitImg"
+                         src="chuchu_cutout.png"
+                         alt="Snow thổi nến sinh nhật"
+                         onerror="if(this.src.indexOf('chuchu_cutout.png')!==-1){this.src='chuchu.png';}else if(this.src.indexOf('chuchu.png')!==-1){this.src='chuchu.img';}"
+                         class="w-full h-full object-contain pointer-events-none select-none transition-all duration-300" />
+                </div>
+            </div>
+
+        </div>
+
+        <!-- STAGE 2 BOTTOM CONTROL DOCK & INTEGRATED BREATH PROGRESS METER -->
+        <div class="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 w-[95%] max-w-lg px-2 flex flex-col items-center gap-2">
+
+            <!-- Integrated Breath Power Progress Meter -->
+            <div id="breathMeterContainer" class="w-full flex items-center justify-between px-4 py-1.5 rounded-full bg-slate-950/85 border border-white/20 backdrop-blur-md opacity-0 transition-opacity duration-300 pointer-events-none shadow-xl">
+                <span class="text-[11px] font-semibold tracking-wider uppercase text-sky-200 flex items-center gap-1.5">
+                    <i data-lucide="wind" class="w-3.5 h-3.5 text-sky-400 animate-pulse"></i>
+                    <span>Luồng Hơi Thổi</span>
+                </span>
+                <div class="flex-1 mx-3 h-2 rounded-full bg-white/10 p-0.5 overflow-hidden">
+                    <div id="breathMeterBar" class="h-full w-0 rounded-full bg-gradient-to-r from-sky-400 via-pink-400 to-amber-300 transition-all duration-75"></div>
+                </div>
+                <span id="breathPercentText" class="text-xs font-bold text-amber-300 min-w-[34px] text-right">0%</span>
+            </div>
+
+            <!-- Primary Control Dock -->
+            <div class="glass-panel w-full rounded-2xl sm:rounded-full px-3 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between gap-2 shadow-2xl">
+                <!-- Microphone Real Blow Button -->
+                <button id="btnMicBlow" class="glass-pill px-3.5 py-2.5 rounded-xl sm:rounded-full flex items-center justify-center gap-1.5 text-xs sm:text-sm font-medium text-sky-200 hover:text-white">
+                    <i data-lucide="mic" class="w-4 h-4 text-sky-400"></i>
+                    <span id="micBtnText">Bật Mic</span>
+                </button>
+
+                <!-- Primary Hold to Blow Button -->
+                <button id="btnHoldBlow" class="blow-btn-glow flex-1 px-5 py-3 rounded-xl sm:rounded-full flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-white tracking-wide cursor-pointer select-none">
+                    <i data-lucide="wind" class="w-5 h-5 animate-pulse"></i>
+                    <span id="blowBtnLabel">Giữ Để Thổi Nến 💨</span>
+                </button>
+
+                <!-- Relight Candles Button -->
+                <button id="btnRelight" title="Thắp sáng lại nến" class="glass-pill px-3.5 py-2.5 rounded-xl sm:rounded-full flex items-center gap-1.5 text-xs sm:text-sm font-medium text-amber-200 hover:text-white">
+                    <i data-lucide="flame" class="w-4 h-4 text-amber-400"></i>
+                    <span class="hidden sm:inline">Thắp Lại</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- =========================================================================
+         FOREGROUND REAL-TIME PHYSICS CANVAS (Candles, Flames, Shockwave Rings,
+         Aurora Ribbons, Bending Flames, Embers, Smoke, Fireworks, Confetti)
+    ========================================================================== -->
+    <canvas id="fxCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-25"></canvas>
+
+    <!-- =========================================================================
+         STAGE 3: GIAO DIỆN VIẾT ĐIỀU ƯỚC (100% LÃNG MẠN, GOOGLE SCRIPT GẮN TRỰC TIẾP VÀO CODE)
+    ========================================================================== -->
+    <section id="stage3WishForm" class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-all duration-700 stage-hidden">
+        <div id="wishFormBox" class="glass-panel relative w-full max-w-lg rounded-3xl p-6 sm:p-8 border border-pink-300/35 shadow-[0_0_90px_rgba(236,72,153,0.45)] overflow-hidden">
+
+            <!-- Ambient Orbs -->
+            <div class="absolute -top-24 -left-24 w-52 h-52 bg-sky-500/25 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-52 h-52 bg-pink-500/30 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Form View -->
+            <div id="wishFormInputView">
+                <div class="flex flex-col items-center text-center mb-5">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-400/30 via-pink-500/30 to-sky-400/30 border border-amber-300/50 flex items-center justify-center mb-2 shadow-[0_0_30px_rgba(251,191,36,0.4)]">
+                        <i data-lucide="send" class="w-6 h-6 text-amber-300"></i>
+                    </div>
+                    <h2 class="font-script text-4xl sm:text-5xl text-shimmer mt-1">
+                        Điều Ước Tuổi Mới Của Vợ Iu ✨
+                    </h2>
+                    <p class="text-xs sm:text-sm text-purple-200/80 mt-1">
+                        Nến đã tắt! Hãy viết điều ước của Vợ iu xuống đây, điều ước sẽ hóa thành ngôi sao băng rực rỡ và bay thẳng lên trời sao nhé 💌
+                    </p>
+                </div>
+
+                <!-- Form Fields (Clean & Romantic) -->
+                <div class="space-y-4">
+                    <!-- Birthday Girl's Sender Name -->
+                    <div>
+                        <label class="flex items-center justify-between text-xs font-semibold text-pink-200 mb-1">
+                            <span class="flex items-center gap-1.5">
+                                <i data-lucide="heart" class="w-3.5 h-3.5 text-pink-400"></i>
+                                Tên hoặc biệt danh của em:
+                            </span>
+                        </label>
+                        <input type="text" id="inputSenderName"
+                               value="Snow - Vợ Iu 💖"
+                               placeholder="Nhập tên hoặc biệt danh của em..."
+                               class="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white text-sm placeholder-white/40 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-400/30 transition-all" />
+                    </div>
+
+                    <!-- Birthday Girl's Wish Message -->
+                    <div>
+                        <label class="flex items-center justify-between text-xs font-semibold text-pink-200 mb-1">
+                            <span class="flex items-center gap-1.5">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
+                                Nội dung điều ước sinh nhật:
+                            </span>
+                        </label>
+                        <textarea id="inputWishContent" rows="4"
+                                  placeholder="Viết điều ước tuổi mới thật ngọt ngào của em vào đây nhé... ✨"
+                                  class="w-full px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white text-sm sm:text-base placeholder-white/40 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-400/30 leading-relaxed transition-all"></textarea>
+                    </div>
+
+                    <!-- Quick Wish Suggestion Chips -->
+                    <div class="flex flex-wrap gap-1.5 pt-0.5">
+                        <button type="button" class="wish-chip text-[11px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/15 border border-white/15 text-pink-200 transition-all">
+                            💖 Luôn hạnh phúc và yêu thương nhau thật lâu
+                        </button>
+                        <button type="button" class="wish-chip text-[11px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/15 border border-white/15 text-amber-200 transition-all">
+                            🌟 Tuổi mới xinh đẹp rạng rỡ & mọi điều như ý
+                        </button>
+                        <button type="button" class="wish-chip text-[11px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/15 border border-white/15 text-sky-200 transition-all">
+                            ✈️ Cùng anh đi du lịch thật nhiều vùng đất mới
+                        </button>
+                    </div>
+
+                    <!-- Validation / Status Feedback -->
+                    <p id="wishStatusMsg" class="text-xs text-center text-amber-300 hidden"></p>
+                </div>
+
+                <!-- Submit Actions -->
+                <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <button type="button" id="btnBackToBlowAgain" class="glass-pill w-full sm:w-auto px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium text-white/80 hover:text-white flex items-center justify-center gap-1.5">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4 text-amber-300"></i>
+                        <span>Thổi Nến Lại</span>
+                    </button>
+
+                    <button type="button" id="btnSendWishToGmail" class="blow-btn-glow w-full sm:flex-1 px-6 py-3.5 rounded-full text-sm sm:text-base font-bold text-white flex items-center justify-center gap-2 shadow-xl">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        <span id="sendWishBtnText">Gửi Điều Ước Lên Trời Sao 💌</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Success Sent View (Appears after sending wish) -->
+            <div id="wishSentSuccessView" class="hidden flex-col items-center text-center py-4">
+                <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-emerald-400/30 to-sky-400/30 border-2 border-emerald-300/60 flex items-center justify-center mb-4 shadow-[0_0_40px_rgba(52,211,153,0.6)] animate-bounce">
+                    <i data-lucide="check-circle-2" class="w-10 h-10 text-emerald-300"></i>
+                </div>
+                <h3 class="font-script text-4xl sm:text-5xl text-shimmer">
+                    Điều Ước Đã Bay Đi! ✨
+                </h3>
+                <p id="sentConfirmationDetail" class="text-sm text-purple-100/90 mt-2 max-w-md leading-relaxed">
+                    Điều ước sinh nhật của Snow iu đã hóa thành ngôi sao băng rực rỡ và được gửi thẳng đến trái tim của anh!
+                </p>
+
+                <!-- Preview Sent Wish Card -->
+                <div id="sentWishPreviewBox" class="mt-4 p-4 rounded-2xl bg-white/5 border border-pink-300/25 w-full text-left">
+                    <div class="text-[11px] uppercase tracking-wider text-amber-300 font-semibold mb-1">✨ Nội dung điều ước đã gửi:</div>
+                    <p id="sentWishPreviewText" class="font-serif-luxury italic text-sm text-pink-100 whitespace-pre-line"></p>
+                </div>
+
+                <div class="mt-6 flex items-center justify-center gap-3">
+                    <button id="btnWriteAnotherWish" class="glass-pill px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-pink-200 hover:text-white">
+                        Viết Thêm Điều Ước Khác
+                    </button>
+                    <button id="btnReplayFullJourney" class="blow-btn-glow px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span>Thổi Nến Lại</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Custom JavaScript Engine -->
+    <script src="js/script.js"></script>
+</body>
+</html>
